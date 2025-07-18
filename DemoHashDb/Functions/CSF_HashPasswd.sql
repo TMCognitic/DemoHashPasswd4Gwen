@@ -1,0 +1,9 @@
+﻿CREATE FUNCTION [dbo].[CSF_HashPasswd]
+(
+	@Content BINARY(64)
+)
+RETURNS BINARY(64)
+AS
+BEGIN
+	RETURN HASHBYTES('SHA2_512', dbo.CSF_GetPreSalt() + REPLACE(CONVERT(NVARCHAR(MAX), @Content), N'0x', N'') + dbo.CSF_GetPostSalt());
+END
